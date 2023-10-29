@@ -1,5 +1,18 @@
 {
-  "dependencies": {
-    "inquirer": "^8.2.4"
+  "name": "mysql-for-spacex",
+  "version": "1.0.0",
+  "main": "server.js",
+  "devDependencies": {},
+  "keywords": [],
+  "description": "",
+  "scripts": {
+    "start": "node server.js"
+  },
+    "author": "",      
+    "license": "ISC",
+    "dependencies": {
+    "inquirer": "^8.2.4",
+    "mysql2": "^3.6.2"
   }
+ 
 }
