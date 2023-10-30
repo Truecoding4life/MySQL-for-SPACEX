@@ -1,34 +1,33 @@
-DROP DATABASE IF EXISTS "spaceX";
-CREATE DATABASE `spaceX`;
+DROP DATABASE IF EXISTS spaceX;
+CREATE DATABASE spaceX;
 
-USE "spaceX";
-CREATE TABLE "department"(
-    id NOT NULL AUTO_INCREMENT PRIMARY KEY,
+USE spaceX;
+CREATE TABLE Department(
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     Name VARCHAR(30) NOT NULL
 );
 
-CREATE TABLE "role"(
-    id NOT NULL AUTO_INCREMENT PRIMARY KEY,
+CREATE TABLE Role(
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     Title VARCHAR(30) NOT NULL,
     Salary DECIMAL(4) NOT NULL,
-    Department_id INT NOT NULL,
-    FOREIGN KEY (department_id) REFERENCES department(id)
+    Department_ID INT,
+    FOREIGN KEY (Department_ID) REFERENCES Department(id) ON DELETE SET NULL
 );
 
-CREATE TABLE "employee"(
-    id NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    First_name VARCHAR(30) NOT NULL,
-    Last_name VARCHAR(30) NOT NULL,
-    Role_id INT NOT NULL,
-    Manager_id INT,
-    FOREIGN KEY (role_id) REFERENCES role(id),
-    FOREIGN KEY (manager_id) REFERENCES employee(id)
+CREATE TABLE Employee(
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    First VARCHAR(30) NOT NULL,
+    Last VARCHAR(30) NOT NULL,
+    Role_ID INT,
+  
+    FOREIGN KEY (Role_ID) REFERENCES Role(id)  
+    -- Manager_ID INT,
+    -- FOREIGN KEY (Manager_ID) REFERENCES Manager(id) ON DELETE SET NULL
 );
 
-CREATE TABLE "manger"(
-    id NOT NULL AUTO_INCREMENT=100 PRIMARY KEY,
-    First_name VARCHAR(30) NOT NULL,
-    Last_name VARCHAR(30) NOT NULL,
-    Role_id INT NOT NULL,
-    FOREIGN KEY (role_id) REFERENCES role(id)
+CREATE TABLE Manager(
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    Employee_ID INT,
+    FOREIGN KEY (Employee_ID) REFERENCES Employee(id) ON DELETE SET NULL
 );
