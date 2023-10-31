@@ -4,10 +4,7 @@ const mysql = require("mysql2");
 const express = require("express");
 const app = express();
 const question = require('./Assets/js/questions');
-// Express middleware
-app.use(express.urlencoded({ extended: false }));
-app.use(express.json());
-let newArray = [];
+
 // Connect to Database
 const connection = mysql.createConnection({
   host: "localhost",
@@ -15,8 +12,12 @@ const connection = mysql.createConnection({
   password: "11223344",
   database: "spaceB",
 });
-let allDepartment = []; // This will be placeholder for department selection
-updateDepartment(); // This function will update the current array of all Department for user
+let allDepartment = [];
+let allManager =[];
+let allRole = [];
+updateDepartment(); // This function will update the department array
+updateRole(); // This function will update the role array
+updateManager(); // This function will update manager array
 // This function will prompt main questions
 function Ask() {
   inquirer.prompt(question[0]).then(function (answers) {
@@ -40,6 +41,7 @@ function Ask() {
         addRole();
         break;
       case "ADD EMPLOYEE":
+        addEmployee();
         break;
       case "UPDATE EMPLOYEE'S ROLE":
         console.log("USER UPDATED EMPLOYEE'S ROLE");
@@ -56,8 +58,9 @@ function viewAllDepartment() {
   connection.query(`SELECT * FROM Department`, (error, results) => {
     console.table(results);
     Ask(); // Ask the first question again after user selected a choice
-  });
-}
+  }
+  );
+};
 
 // This function will render all role within the database
 function viewAllRole() {
@@ -69,13 +72,12 @@ function viewAllRole() {
       Ask(); // Ask the first question again after user selected a choice
     }
   );
-}
+};
 // This function will render all employee within the database
-const viewAllEmployee = () => {
-  connection.query(
-    ` SELECT Employee.id AS Employee_ID, Title AS Position, First AS First_Name, Last AS Last_Name, Manager_Name FROM Employee LEFT JOIN Manager ON  Manager.id=Employee.Manager_ID
+function viewAllEmployee(){
+  connection.query(`SELECT Employee.id AS Employee_ID, Title AS Position, First AS First_Name, Last AS Last_Name, Manager_Name FROM Employee LEFT JOIN Manager ON  Manager.id=Employee.Manager_ID
   LEFT JOIN Role ON Role.id=Employee.Role_ID;`,
-    (error, results) => {
+(error, results) => {
       console.table(results);
       Ask(); // Ask the first question again after user selected a choice
     }
@@ -123,6 +125,37 @@ function updateDepartment() {
   return allDepartment;
 };
 
+
+// This function will add new employee
+// This function will prompt questions to add new employee
+function addEmployee(){
+  inquirer.prompt([question[5],question[6],{
+    name: "role",
+    message: "CHOSE A ROLE FOR THIS EMPLOYEE", // ID is Special since the User doesn't know exactly which id to input we will use a list
+    type: "list",
+    choices: allRole,
+  }, {
+    name: "manager",
+    message: "CHOSE A MANAGER FOR THIS EMPLOYEE, REMEMBER THAT EVERYBODY FALL UNDER CEO ELON MUSK",
+    type: "list",
+    choices: allManager,
+  },])
+  .then((respond) => { 
+    const roleID = allRole.indexOf(respond.role);
+    const ManagerID = allManager.indexOf(respond.manager);
+    connection.query(`INSERT INTO Employee(First, Last, Role_ID,Manager_ID) VALUES ("${respond.first}", "${respond.last}", ${(roleID+1)}, ${(ManagerID+1)});`);
+    Ask();
+  })
+};
+
+function updateRole(){
+  connection.query("SELECT Name FROM Department ", (error, results) => {
+    for (i = 0; i < results.length; i++) {
+      allDepartment.push(results[i].Name);
+    }
+  });
+  return allDepartment;
+}
 // This function will prompt first question
 Ask();
 

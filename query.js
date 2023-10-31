@@ -1,37 +1,27 @@
-const mysql = require("mysql2");
-const express = require("express");
-const app = express();
-const PORT = process.env.PORT || 3001;
-// Express middleware
-app.use(express.urlencoded({ extended: false }));
-app.use(express.json());
+// let allDepartment = [];
+// let allManager =[];
+// let allRole = [];
+// updateDepartment(); // This function will update the department array
+// updateRole(); // This function will update the role array
+// updateManager(); // This function will update manager array
 
-const connection = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "11223344",
-    database: "spaceB",
-  });
-
-  // Function to View each Department
-
-function viewAllDepartment (express) {
-    express.query(`USE spaceB; SELECT * FROM Department;`, (error, results) => {
-        console.table(results);
-    });
-  };
-  
-  function viewAllRole (connection) {
-    connection.query(`USE spaceB; SELECT Title AS Position, Salary, Name AS Department FROM Role RIGHT JOIN Department ON Role.Department_ID = Department.id;`, (error, results) => {
-        console.table(results);
-    });
-  };
-  const viewAllEmployee = () => {
-    connection.query(`USE spaceB; SELECT Employee.id AS ID, Title AS Position, First AS First_Name, Last AS Last_Name, Manager_Name FROM Employee LEFT JOIN Manager ON  Manager.id=Employee.Manager_ID
-    LEFT JOIN Role ON Role.id=Employee.Role_ID;`, (error, results) => {
-        console.table(results);
-    });
-  };
-
-
-module.exports = viewAllDepartment,viewAllRole,viewAllEmployee;
+// // This function will prompt questions to add new employee
+// function addEmployee(){
+//   inquirer.prompt([question[5],question[6],{
+//     name: "Thisrole",
+//     message: "CHOSE A ROLE FOR THIS EMPLOYEE", // ID is Special since the User doesn't know exactly which id to input we will use a list
+//     type: "list",
+//     choices: allRole,
+//   }, {
+//     name: "manager",
+//     message: "CHOSE A MANAGER FOR THIS EMPLOYEE, REMEMBER THAT EVERYBODY FALL UNDER CEO ELON MUSK",
+//     type: "list",
+//     choices: allManager,
+//   },])
+//   .then((respond) => { 
+//     const roleID = allRole.indexOf(respond.Thisrole);
+//     const ManagerID = allManager.indexOf(respond.manager);
+//     connection.query(`INSERT INTO Employee(First, Last, Role_ID,Manager_ID) VALUES ("${respond.first}", "${respond.last}", ${(roleID+1)}, ${(ManagerID+1)});`);
+//     Ask();
+//   })
+// };

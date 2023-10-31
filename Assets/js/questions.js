@@ -9,7 +9,7 @@ const question = [
     choices: [
       "VIEW ALL DEPARTMENTS",
       "VIEW ALL ROLES",
-      "VIEW ALL EMPLOYEE",
+      "VIEW ALL EMPLOYEES",
       "ADD NEW DEPARTMENT",
       "ADD NEW ROLE",
       "ADD EMPLOYEE",
