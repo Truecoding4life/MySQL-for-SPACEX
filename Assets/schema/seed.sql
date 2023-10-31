@@ -60,4 +60,11 @@ SELECT DISTINCT Name AS Department, Manager_Name AS Department_Manager FROM Depa
 JOIN Employee ON Department.id = Employee.Manager_ID 
 JOIN Manager ON Manager.id = Employee.Manager_ID;
 
--- ADD NEW ROLE
+-- ADD DEPARTMENT
+INSERT INTO Department(name)
+VALUES ("Test");
+
+-- SHOW ALL DEPARTMENT EVEN NULL
+SELECT DISTINCT Name AS Department, Role.Title FROM Department
+FULL JOIN Role ON Role.Department_ID = Department.id;
+--   JOIN Manager ON Manager.id = Employee.Manager_ID;

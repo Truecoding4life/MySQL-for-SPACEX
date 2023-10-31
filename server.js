@@ -35,18 +35,13 @@ const question = [
       "UPDATE EMPLOYEE'S ROLE",
       "EXIT",
     ],
-  },
-  {
-    name: "greeting",
-    message: "What would you like to say?",
-    type: "input",
-  },
+  }
 ];
 
-const NextQuestion = [
+const Question = [
   {
-    name: "name",
-    message: "What is your name?",
+    name: "ENTER A NAME FOR NEW DEPARTMENT",
+    message: "Enter",
     type: "input",
   },
   {
@@ -73,7 +68,8 @@ function Ask () {
         console.log("NOW VIEWING ALL EMPLOYEE INFORMATION");
         break;
       case "ADD NEW DEPARTMENT":
-        console.log("USER ADDED NEW DEPARTMENT");
+        addDepartment()
+        console.log("CREATE NEW DEPARTMENT");
         break;
       case "ADD NEW ROLE":
         console.log("USER ADDED NEW ROLE");
@@ -99,9 +95,7 @@ function Ask () {
 // Function to View each Department
 
 function viewAllDepartment () {
-  connection.query(`SELECT DISTINCT Name AS Department, Manager_Name AS Department_Manager FROM Department
-  JOIN Employee ON Department.id = Employee.Manager_ID 
-  JOIN Manager ON Manager.id = Employee.Manager_ID;`, (error, results) => {
+  connection.query(`SELECT * FROM Department`, (error, results) => {
       console.table(results);
       Ask();
   });
@@ -114,9 +108,21 @@ function viewAllRole () {
   });
 };
 const viewAllEmployee = () => {
-  connection.query(`SELECT Employee.id AS ID, Title AS Position, First AS First_Name, Last AS Last_Name, Manager_Name FROM Employee LEFT JOIN Manager ON  Manager.id=Employee.Manager_ID
+  connection.query(` SELECT Employee.id AS Employee_ID, Title AS Position, First AS First_Name, Last AS Last_Name, Manager_Name FROM Employee LEFT JOIN Manager ON  Manager.id=Employee.Manager_ID
   LEFT JOIN Role ON Role.id=Employee.Role_ID;`, (error, results) => {
       console.table(results);
       Ask();
+  });
+};
+function addDepartment(){
+  inquirer.prompt({
+    name: "department",
+    message: "Enter",
+    type: "input",
+  }).then((respond) => {
+      console.log(respond.department);
+      connection.query(`INSERT INTO Department(name) VALUES ("${respond.department}");`)
+  }).then(() => { console.log("NEW DEPARTMENT ADDED");
+  Ask();
   });
 };
