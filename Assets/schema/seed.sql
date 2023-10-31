@@ -48,8 +48,16 @@ SELECT First AS First_Name, Last AS Last_Name, Title AS Position FROM Employee R
 
 
 -- SHOW ALL DATA
-SELECT First AS First_Name, Last AS Last_Name, Manager_Name, Title FROM Employee LEFT JOIN Manager ON  Manager.id=Employee.Manager_ID
+SELECT Employee.id AS ID, Title AS Position, First AS First_Name, Last AS Last_Name, Manager_Name FROM Employee LEFT JOIN Manager ON  Manager.id=Employee.Manager_ID
 LEFT JOIN Role ON Role.id=Employee.Role_ID;
 
 -- SHOW ALL ROLE
 SELECT Title AS Position, Salary, Name AS Department FROM Role RIGHT JOIN Department ON Role.Department_ID = Department.id;
+
+
+-- SHOW ALL DEPARTMENT
+SELECT DISTINCT Name AS Department, Manager_Name AS Department_Manager FROM Department
+JOIN Employee ON Department.id = Employee.Manager_ID 
+JOIN Manager ON Manager.id = Employee.Manager_ID;
+
+-- ADD NEW ROLE

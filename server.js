@@ -66,11 +66,11 @@ function Ask () {
         break;
       case "VIEW ALL ROLES":
         viewAllRole();
-        console.log("NOW VIEWING ALL ROLES");
+        console.log("NOW VIEWING ALL ROLES, SALARY AND DEPARTMENTS");
         break;
       case "VIEW ALL EMPLOYEE":
         viewAllEmployee();
-        console.log("NOW VIEWING ALL EMPLOYEE");
+        console.log("NOW VIEWING ALL EMPLOYEE INFORMATION");
         break;
       case "ADD NEW DEPARTMENT":
         console.log("USER ADDED NEW DEPARTMENT");
@@ -99,8 +99,9 @@ function Ask () {
 // Function to View each Department
 
 function viewAllDepartment () {
-  connection.query(`SELECT First AS First_Name, Last AS Last_Name, Manager_Name, Title FROM Employee LEFT JOIN Manager ON  Manager.id=Employee.Manager_ID
-  LEFT JOIN Role ON Role.id=Employee.Role_ID;`, (error, results) => {
+  connection.query(`SELECT DISTINCT Name AS Department, Manager_Name AS Department_Manager FROM Department
+  JOIN Employee ON Department.id = Employee.Manager_ID 
+  JOIN Manager ON Manager.id = Employee.Manager_ID;`, (error, results) => {
       console.table(results);
       Ask();
   });
@@ -113,7 +114,8 @@ function viewAllRole () {
   });
 };
 const viewAllEmployee = () => {
-  connection.query(`SELECT Employee.id AS Employee_ID, First AS First_Name, Last AS Last_Name, Manager_Name, Title FROM Employee LEFT JOIN Manager ON Manager.id=Employee.Manager_ID LEFT JOIN Role ON Role.id=Employee.Role_ID;`, (error, results) => {
+  connection.query(`SELECT Employee.id AS ID, Title AS Position, First AS First_Name, Last AS Last_Name, Manager_Name FROM Employee LEFT JOIN Manager ON  Manager.id=Employee.Manager_ID
+  LEFT JOIN Role ON Role.id=Employee.Role_ID;`, (error, results) => {
       console.table(results);
       Ask();
   });

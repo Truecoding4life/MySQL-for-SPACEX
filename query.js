@@ -29,7 +29,8 @@ function viewAllDepartment (express) {
     });
   };
   const viewAllEmployee = () => {
-    connection.query(`SELECT Employee.id AS Employee_ID, First AS First_Name, Last AS Last_Name, Manager_Name, Title FROM Employee LEFT JOIN Manager ON Manager.id=Employee.Manager_ID LEFT JOIN Role ON Role.id=Employee.Role_ID;`, (error, results) => {
+    connection.query(`SELECT Employee.id AS ID, Title AS Position, First AS First_Name, Last AS Last_Name, Manager_Name FROM Employee LEFT JOIN Manager ON  Manager.id=Employee.Manager_ID
+    LEFT JOIN Role ON Role.id=Employee.Role_ID;`, (error, results) => {
         console.table(results);
     });
   };
