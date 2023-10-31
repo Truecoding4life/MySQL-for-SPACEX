@@ -3,7 +3,7 @@ const inquirer = require("inquirer");
 const mysql = require("mysql2");
 const express = require("express");
 const app = express();
-const question = require('./questions')
+const question = require('./questions');
 // Express middleware
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
@@ -15,7 +15,8 @@ const connection = mysql.createConnection({
   password: "11223344",
   database: "spaceB",
 });
-let allRole = ['Human Resources', 'Design', 'Test', 'Finance','Education'];
+let allDepartment = []; // This will be placeholder for department selection
+updateDepartment();
 function Ask() {
   inquirer.prompt(question[0]).then(function (answers) {
     switch (answers.Main) {
@@ -37,10 +38,8 @@ function Ask() {
         break;
       case "ADD NEW ROLE":
         addRole();
-        console.log("INPUT REQUIRED");
         break;
       case "ADD EMPLOYEE":
-        count();
         break;
       case "UPDATE EMPLOYEE'S ROLE":
         console.log("USER UPDATED EMPLOYEE'S ROLE");
@@ -84,7 +83,7 @@ const viewAllEmployee = () => {
 // Add new department to the database using this
 function addDepartment() {
   inquirer.prompt(question[1]).then((respond) => {
-      allRole.push(respond.department);
+      allDepartment.push(respond.department);
       connection.query(`INSERT INTO Department(name) VALUES ("${respond.department}");`
       );}).then(() => {
       console.log("NEW DEPARTMENT ADDED")
@@ -100,7 +99,7 @@ function addRole() {
       name: "id",
       message: "CHOSE A DEPARTMENT FOR THIS ROLE", // ID is Special since the User doesn't know exactly which id to input we will use a list
       type: "list",
-      choices: allRole,
+      choices: allDepartment,
     },])
     .then((respond) => {
       const IdConvert = allRole.indexOf(respond.id);
@@ -113,14 +112,13 @@ function addRole() {
       Ask();
     });
 }
-function count() {
+function updateDepartment() {
   connection.query("SELECT Name FROM Department ", (error, results) => {
-    let newArray = [];
     for (i = 0; i < results.length; i++) {
-      newArray.push(results[i].Name);
+      allDepartment.push(results[i].Name);
     }
   });
-  return newArray;
+  return allDepartment;
 };
 
 // This function will prompt first question
