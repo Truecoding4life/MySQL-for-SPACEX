@@ -3,7 +3,7 @@ const inquirer = require("inquirer");
 const mysql = require("mysql2");
 const express = require("express");
 const app = express();
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3001;;
 // Express middleware
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
@@ -55,48 +55,45 @@ const NextQuestion = [
     type: "input",
   },
 ];
-
+Ask();
 let DoNext = 0;
-inquirer.prompt(question[0]).then(function (answers) {
-  switch (answers.Main) {
-    case "VIEW ALL DEPARTMENTS":
-      DoNext = 0;
-      viewAllDepartment();
-      console.log("USER VIEWED ALL DEPARTMENTS ");
-      break;
-    case "VIEW ALL ROLES":
-      viewAllRole();
-      console.log("USER VIEWED ALL ROLES");
-      break;
-    case "VIEW ALL EMPLOYEE":
-      viewAllEmployee();
-      console.log("USER VIEWED ALL EMPLOYEE");
-      break;
-    case "ADD NEW DEPARTMENT":
-      DoNext = 3;
-      console.log("USER ADDED NEW DEPARTMENT");
-      break;
-    case "ADD NEW ROLE":
-      DoNext = 4;
-      console.log("USER ADDED NEW ROLE");
-      break;
-    case "ADD EMPLOYEE":
-      DoNext = 5;
-      console.log("USER ADDED EMPLOYEE");
-      break;
-    case "UPDATE EMPLOYEE'S ROLE":
-      DoNext = 6;
-      console.log("USER UPDATED EMPLOYEE'S ROLE");
-      break;
-    case "EXIT":
-      DoNext = 7;
-      console.log(" USER EXITED ");
-      return;
-  }
-  // inquirer.prompt(NextQuestion[DoNext]).then(function (answers1) {
-  //   console.log("Your name is:", answers1.name);
-  // });
-});
+function Ask () {
+  inquirer.prompt(question[0]).then(function (answers) {
+    switch (answers.Main) {
+      case "VIEW ALL DEPARTMENTS":
+        viewAllDepartment();
+        console.log("NOW VIEWING ALL DEPARTMENTS ");
+        break;
+      case "VIEW ALL ROLES":
+        viewAllRole();
+        console.log("NOW VIEWING ALL ROLES");
+        break;
+      case "VIEW ALL EMPLOYEE":
+        viewAllEmployee();
+        console.log("NOW VIEWING ALL EMPLOYEE");
+        break;
+      case "ADD NEW DEPARTMENT":
+        console.log("USER ADDED NEW DEPARTMENT");
+        break;
+      case "ADD NEW ROLE":
+        console.log("USER ADDED NEW ROLE");
+        break;
+      case "ADD EMPLOYEE":
+        console.log("USER ADDED EMPLOYEE");
+        break;
+      case "UPDATE EMPLOYEE'S ROLE":
+        console.log("USER UPDATED EMPLOYEE'S ROLE");
+        break;
+      case "EXIT":
+        console.log(" USER EXITED ");
+        return;
+    }
+    // inquirer.prompt(NextQuestion[DoNext]).then(function (answers1) {
+    //   console.log("Your name is:", answers1.name);
+    // });
+  });
+}
+
 
 
 // Function to View each Department
@@ -105,16 +102,19 @@ function viewAllDepartment () {
   connection.query(`SELECT First AS First_Name, Last AS Last_Name, Manager_Name, Title FROM Employee LEFT JOIN Manager ON  Manager.id=Employee.Manager_ID
   LEFT JOIN Role ON Role.id=Employee.Role_ID;`, (error, results) => {
       console.table(results);
+      Ask();
   });
 };
 
 function viewAllRole () {
   connection.query(`SELECT Title AS Position, Salary, Name AS Department FROM Role RIGHT JOIN Department ON Role.Department_ID = Department.id;`, (error, results) => {
       console.table(results);
+      Ask();
   });
 };
-function viewAllEmployee () {
+const viewAllEmployee = () => {
   connection.query(`SELECT Employee.id AS Employee_ID, First AS First_Name, Last AS Last_Name, Manager_Name, Title FROM Employee LEFT JOIN Manager ON Manager.id=Employee.Manager_ID LEFT JOIN Role ON Role.id=Employee.Role_ID;`, (error, results) => {
       console.table(results);
+      Ask();
   });
 };
