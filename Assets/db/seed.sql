@@ -38,8 +38,9 @@ VALUES ("Amber", "Heard",2,1),
        ("Steve", "Jobs",6,3),
        ("Kevin", "Lebronze",7,1),
        ("Kobe", "Bryant",8,4);
-       
 
+------------------------------------- READ DATA COMMANDS -------------------------------------
+-- SHOW EMPLOYEE AND THEIR MANAGER
 SELECT First,Last,Manager_Name FROM Employee INNER JOIN Manager ON Employee.Manager_ID = Manager.id;
 
 
@@ -74,3 +75,7 @@ VALUES ("CEO", 200000, 1);
 
 -- RETURN ALL DEPARTMENT
 "SELECT Name FROM Department ")
+
+
+-- UPDATE EMPLOYEE
+UPDATE Employee SET First = "Elon", Last = "Musk", Role_ID = 1 WHERE id = 1;
