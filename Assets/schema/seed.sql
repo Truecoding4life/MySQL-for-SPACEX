@@ -51,6 +51,5 @@ SELECT First AS First_Name, Last AS Last_Name, Title AS Position FROM Employee R
 SELECT First AS First_Name, Last AS Last_Name, Manager_Name, Title FROM Employee LEFT JOIN Manager ON  Manager.id=Employee.Manager_ID
 LEFT JOIN Role ON Role.id=Employee.Role_ID;
 
-USE spaceX;
-UPDATE Role
-SET Title = "Junior Accountant"   WHERE id = 8;
+-- SHOW ALL ROLE
+SELECT Title AS Position, Salary, Name AS Department FROM Role RIGHT JOIN Department ON Role.Department_ID = Department.id;

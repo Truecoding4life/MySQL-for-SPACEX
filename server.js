@@ -13,7 +13,7 @@ const connection = mysql.createConnection({
   host: "localhost",
   user: "root",
   password: "11223344",
-  database: "spaceX",
+  database: "spaceB",
 });
 
 // view all departments, view all roles,
@@ -65,7 +65,7 @@ inquirer.prompt(question[0]).then(function (answers) {
       console.log("USER VIEWED ALL DEPARTMENTS ");
       break;
     case "VIEW ALL ROLES":
-      DoNext = 1;
+      viewAllRole();
       console.log("USER VIEWED ALL ROLES");
       break;
     case "VIEW ALL EMPLOYEE":
@@ -99,11 +99,17 @@ inquirer.prompt(question[0]).then(function (answers) {
 });
 
 
-// function().then()
+// Function to View each Department
 
 function viewAllDepartment () {
   connection.query(`SELECT First AS First_Name, Last AS Last_Name, Manager_Name, Title FROM Employee LEFT JOIN Manager ON  Manager.id=Employee.Manager_ID
   LEFT JOIN Role ON Role.id=Employee.Role_ID;`, (error, results) => {
+      console.table(results);
+  });
+};
+
+function viewAllRole () {
+  connection.query(`SELECT Title AS Position, Salary, Name AS Department FROM Role RIGHT JOIN Department ON Role.Department_ID = Department.id;`, (error, results) => {
       console.table(results);
   });
 };
