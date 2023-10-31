@@ -17,7 +17,7 @@ let allManager =[];
 let allRole = [];
 updateDepartment(); // This function will update the department array
 updateRole(); // This function will update the role array
-// updateManager(); // This function will update manager array
+updateManager(); // This function will update manager array
 // This function will prompt main questions
 function Ask() {
   inquirer.prompt(question[0]).then(function (answers) {
@@ -156,15 +156,14 @@ function updateRole(){
   });
   return allRole;
 };
-// function updateRole(){
-//   connection.query("SELECT Title FROM Department ", (error, results) => {
-//     for (i = 0; i < results.length; i++) {
-//       allRole.push(results[i].Title);
-//     }
-//   });
-//   return allRole;
-// };
-// This function will prompt first question
+function updateManager(){
+  connection.query("SELECT Manager_Name FROM Manager ", (error, results) => {
+    for (i = 0; i < results.length; i++) {
+      allManager.push(results[i].Manager_Name);
+    }
+  });
+  return allManager;
+};
 Ask();
 
 module.exports=addRole;
