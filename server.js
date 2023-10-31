@@ -3,7 +3,7 @@ const inquirer = require("inquirer");
 const mysql = require("mysql2");
 const express = require("express");
 const app = express();
-const question = require('./questions');
+const question = require('./Assets/js/questions');
 // Express middleware
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
@@ -16,7 +16,8 @@ const connection = mysql.createConnection({
   database: "spaceB",
 });
 let allDepartment = []; // This will be placeholder for department selection
-updateDepartment();
+updateDepartment(); // This function will update the current array of all Department for user
+// This function will prompt main questions
 function Ask() {
   inquirer.prompt(question[0]).then(function (answers) {
     switch (answers.Main) {
@@ -28,13 +29,12 @@ function Ask() {
         viewAllRole();
         console.log("NOW VIEWING ALL ROLES, SALARY AND DEPARTMENTS");
         break;
-      case "VIEW ALL EMPLOYEE":
+      case "VIEW ALL EMPLOYEES":
         viewAllEmployee();
         console.log("NOW VIEWING ALL EMPLOYEE INFORMATION");
         break;
       case "ADD NEW DEPARTMENT":
         addDepartment();
-        console.log("CREATE NEW DEPARTMENT");
         break;
       case "ADD NEW ROLE":
         addRole();
@@ -51,8 +51,7 @@ function Ask() {
   });
 }
 
-// Function to View each tables
-
+// This function will render all Departments within the database
 function viewAllDepartment() {
   connection.query(`SELECT * FROM Department`, (error, results) => {
     console.table(results);
@@ -60,15 +59,18 @@ function viewAllDepartment() {
   });
 }
 
+// This function will render all role within the database
 function viewAllRole() {
   connection.query(
     `SELECT Title AS Position, Salary, Name AS Department FROM Role LEFT JOIN Department ON Role.Department_ID = Department.id;`,
     (error, results) => {
+      (error)=>{ console.log("View All Role ERROR 404")}
       console.table(results);
       Ask(); // Ask the first question again after user selected a choice
     }
   );
 }
+// This function will render all employee within the database
 const viewAllEmployee = () => {
   connection.query(
     ` SELECT Employee.id AS Employee_ID, Title AS Position, First AS First_Name, Last AS Last_Name, Manager_Name FROM Employee LEFT JOIN Manager ON  Manager.id=Employee.Manager_ID
@@ -80,7 +82,7 @@ const viewAllEmployee = () => {
   );
 };
 
-// Add new department to the database using this
+// Add new department to the database using this function
 function addDepartment() {
   inquirer.prompt(question[1]).then((respond) => {
       allDepartment.push(respond.department);
@@ -102,7 +104,7 @@ function addRole() {
       choices: allDepartment,
     },])
     .then((respond) => {
-      const IdConvert = allRole.indexOf(respond.id);
+      const IdConvert = allDepartment.indexOf(respond.id);
       connection.query(
         `INSERT INTO Role(Title, Salary, Department_ID) VALUES ("${respond.Rolename}", "${respond.salary}", ${IdConvert} );`
       );
@@ -123,3 +125,5 @@ function updateDepartment() {
 
 // This function will prompt first question
 Ask();
+
+module.exports=addRole;
