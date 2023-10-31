@@ -43,6 +43,14 @@ const question = [
     message: "CHOSE A DEPARTMENT FOR THIS ROLE", // ID is Special since the User doesn't know exactly which id to input we will use a list
     type: "list",
     choices: allRole,
+  },{ // Question for add employee
+    name: "first",
+    message: "ENTER THIS EMPLOYEE FIRST NAME",
+    type: "input",
+  },{ 
+    name: "last",
+    message: "ENTER THIS EMPLOYEE LAST NAME",
+    type: "input",
   },
 ];
 
