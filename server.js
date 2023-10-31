@@ -3,7 +3,7 @@ const inquirer = require("inquirer");
 const mysql = require("mysql2");
 const express = require("express");
 const app = express();
-const PORT = process.env.PORT || 3001;
+const question = require('./questions')
 // Express middleware
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
@@ -15,36 +15,7 @@ const connection = mysql.createConnection({
   password: "11223344",
   database: "spaceB",
 });
-
-// view all departments, view all roles,
-// view all employees, add a department, add a role,
-// add an employee, and update an employee role
-
-const question = [
-  {
-    name: "Main",
-    message: "Select an option to continue ",
-    type: "list",
-    choices: [
-      "VIEW ALL DEPARTMENTS",
-      "VIEW ALL ROLES",
-      "VIEW ALL EMPLOYEE",
-      "ADD NEW DEPARTMENT",
-      "ADD NEW ROLE",
-      "ADD EMPLOYEE",
-      "UPDATE EMPLOYEE'S ROLE",
-      "EXIT",
-    ],
-  },
-  {
-    name: "department",
-    message: "Enter",
-    type: "input",
-  },
-];
-
-Ask();
-let DoNext = 0;
+let allRole = ['Human Resources', 'Design', 'Test', 'Finance','Education'];
 function Ask() {
   inquirer.prompt(question[0]).then(function (answers) {
     switch (answers.Main) {
@@ -86,7 +57,7 @@ function Ask() {
 function viewAllDepartment() {
   connection.query(`SELECT * FROM Department`, (error, results) => {
     console.table(results);
-    Ask();
+    Ask(); // Ask the first question again after user selected a choice
   });
 }
 
@@ -95,7 +66,7 @@ function viewAllRole() {
     `SELECT Title AS Position, Salary, Name AS Department FROM Role LEFT JOIN Department ON Role.Department_ID = Department.id;`,
     (error, results) => {
       console.table(results);
-      Ask();
+      Ask(); // Ask the first question again after user selected a choice
     }
   );
 }
@@ -105,7 +76,7 @@ const viewAllEmployee = () => {
   LEFT JOIN Role ON Role.id=Employee.Role_ID;`,
     (error, results) => {
       console.table(results);
-      Ask();
+      Ask(); // Ask the first question again after user selected a choice
     }
   );
 };
@@ -113,34 +84,24 @@ const viewAllEmployee = () => {
 // Add new department to the database using this
 function addDepartment() {
   inquirer.prompt(question[1]).then((respond) => {
+      allRole.push(respond.department);
       connection.query(`INSERT INTO Department(name) VALUES ("${respond.department}");`
       );}).then(() => {
-      console.log("NEW DEPARTMENT ADDED");
-      Ask();
+      console.log("NEW DEPARTMENT ADDED")
+      
+      Ask(); // Ask the first question again after user selected a choice
     });
 }
-const allRole = ['Human Resources', 'Design', 'Test', 'Finance','Education'];
+
 // Add new role to database using this
 function addRole() {
   inquirer
-    .prompt([
-      {
-        name: "Rolename",
-        message: "ENTER THIS ROLE NAME",
-        type: "input",
-      },
-      {
-        name: "salary",
-        message: "ENTER THIS ROLE SALARY",
-        type: "input",
-      },
-      {
-        name: "id",
-        message: "CHOSE A DEPARTMENT FOR THIS ROLE", // ID is Special since the User doesn't know exactly which id to input we will use a list
-        type: "list",
-        choices: allRole,
-      },
-    ])
+    .prompt([question[2],question[3], {
+      name: "id",
+      message: "CHOSE A DEPARTMENT FOR THIS ROLE", // ID is Special since the User doesn't know exactly which id to input we will use a list
+      type: "list",
+      choices: allRole,
+    },])
     .then((respond) => {
       const IdConvert = allRole.indexOf(respond.id);
       connection.query(
@@ -161,3 +122,6 @@ function count() {
   });
   return newArray;
 };
+
+// This function will prompt first question
+Ask();
