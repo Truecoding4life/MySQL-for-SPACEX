@@ -67,4 +67,10 @@ VALUES ("Test");
 -- SHOW ALL DEPARTMENT EVEN NULL
 SELECT DISTINCT Name AS Department, Role.Title FROM Department
 FULL JOIN Role ON Role.Department_ID = Department.id;
---   JOIN Manager ON Manager.id = Employee.Manager_ID;
+
+-- ADD ROLE
+INSERT INTO Role(Title, Salary, Department_ID)
+VALUES ("CEO", 200000, 1);   
+
+-- RETURN ALL DEPARTMENT
+"SELECT Name FROM Department ")

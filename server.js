@@ -3,11 +3,11 @@ const inquirer = require("inquirer");
 const mysql = require("mysql2");
 const express = require("express");
 const app = express();
-const PORT = process.env.PORT || 3001;;
+const PORT = process.env.PORT || 3001;
 // Express middleware
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
-
+let newArray = [];
 // Connect to Database
 const connection = mysql.createConnection({
   host: "localhost",
@@ -35,24 +35,17 @@ const question = [
       "UPDATE EMPLOYEE'S ROLE",
       "EXIT",
     ],
-  }
-];
-
-const Question = [
+  },
   {
-    name: "ENTER A NAME FOR NEW DEPARTMENT",
+    name: "department",
     message: "Enter",
     type: "input",
   },
-  {
-    name: "age",
-    message: "What is your age?",
-    type: "input",
-  },
 ];
+
 Ask();
 let DoNext = 0;
-function Ask () {
+function Ask() {
   inquirer.prompt(question[0]).then(function (answers) {
     switch (answers.Main) {
       case "VIEW ALL DEPARTMENTS":
@@ -68,14 +61,15 @@ function Ask () {
         console.log("NOW VIEWING ALL EMPLOYEE INFORMATION");
         break;
       case "ADD NEW DEPARTMENT":
-        addDepartment()
+        addDepartment();
         console.log("CREATE NEW DEPARTMENT");
         break;
       case "ADD NEW ROLE":
-        console.log("USER ADDED NEW ROLE");
+        addRole();
+        console.log("INPUT REQUIRED");
         break;
       case "ADD EMPLOYEE":
-        console.log("USER ADDED EMPLOYEE");
+        count();
         break;
       case "UPDATE EMPLOYEE'S ROLE":
         console.log("USER UPDATED EMPLOYEE'S ROLE");
@@ -84,45 +78,86 @@ function Ask () {
         console.log(" USER EXITED ");
         return;
     }
-    // inquirer.prompt(NextQuestion[DoNext]).then(function (answers1) {
-    //   console.log("Your name is:", answers1.name);
-    // });
   });
 }
 
+// Function to View each tables
 
-
-// Function to View each Department
-
-function viewAllDepartment () {
+function viewAllDepartment() {
   connection.query(`SELECT * FROM Department`, (error, results) => {
+    console.table(results);
+    Ask();
+  });
+}
+
+function viewAllRole() {
+  connection.query(
+    `SELECT Title AS Position, Salary, Name AS Department FROM Role RIGHT JOIN Department ON Role.Department_ID = Department.id;`,
+    (error, results) => {
       console.table(results);
       Ask();
-  });
+    }
+  );
+}
+const viewAllEmployee = () => {
+  connection.query(
+    ` SELECT Employee.id AS Employee_ID, Title AS Position, First AS First_Name, Last AS Last_Name, Manager_Name FROM Employee LEFT JOIN Manager ON  Manager.id=Employee.Manager_ID
+  LEFT JOIN Role ON Role.id=Employee.Role_ID;`,
+    (error, results) => {
+      console.table(results);
+      Ask();
+    }
+  );
 };
 
-function viewAllRole () {
-  connection.query(`SELECT Title AS Position, Salary, Name AS Department FROM Role RIGHT JOIN Department ON Role.Department_ID = Department.id;`, (error, results) => {
-      console.table(results);
+// Add new department to the database using this
+function addDepartment() {
+  inquirer.prompt(question[1]).then((respond) => {
+      connection.query(`INSERT INTO Department(name) VALUES ("${respond.department}");`
+      );}).then(() => {
+      console.log("NEW DEPARTMENT ADDED");
       Ask();
-  });
-};
-const viewAllEmployee = () => {
-  connection.query(` SELECT Employee.id AS Employee_ID, Title AS Position, First AS First_Name, Last AS Last_Name, Manager_Name FROM Employee LEFT JOIN Manager ON  Manager.id=Employee.Manager_ID
-  LEFT JOIN Role ON Role.id=Employee.Role_ID;`, (error, results) => {
-      console.table(results);
+    });
+}
+const allRole = ['Human Resources', 'Design', 'Test', 'Finance','Education'];
+// Add new role to database using this
+function addRole() {
+  inquirer
+    .prompt([
+      {
+        name: "Rolename",
+        message: "ENTER THIS ROLE NAME",
+        type: "input",
+      },
+      {
+        name: "salary",
+        message: "ENTER THIS ROLE SALARY",
+        type: "input",
+      },
+      {
+        name: "id",
+        message: "CHOSE A DEPARTMENT FOR THIS ROLE", // ID is Special since the User doesn't know exactly which id to input we will use a list
+        type: "list",
+        choices: allRole,
+      },
+    ])
+    .then((respond) => {
+      const IdConvert = allRole.indexOf(respond.id);
+      connection.query(
+        `INSERT INTO Role(Title, Salary, Department_ID) VALUES ("${respond.Rolename}", "${respond.salary}", ${IdConvert} );`
+      );
+    })
+    .then(() => {
+      console.log("NEW ROLE");
       Ask();
+    });
+}
+function count() {
+  connection.query("SELECT Name FROM Department ", (error, results) => {
+    let newArray = [];
+    for (i = 0; i < results.length; i++) {
+      newArray.push(results[i].Name);
+    }
   });
-};
-function addDepartment(){
-  inquirer.prompt({
-    name: "department",
-    message: "Enter",
-    type: "input",
-  }).then((respond) => {
-      console.log(respond.department);
-      connection.query(`INSERT INTO Department(name) VALUES ("${respond.department}");`)
-  }).then(() => { console.log("NEW DEPARTMENT ADDED");
-  Ask();
-  });
+  return newArray;
 };

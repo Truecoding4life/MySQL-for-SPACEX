@@ -34,4 +34,5 @@ function viewAllDepartment (express) {
     });
   };
 
+
 module.exports = viewAllDepartment,viewAllRole,viewAllEmployee;
