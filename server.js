@@ -92,7 +92,7 @@ function viewAllDepartment() {
 
 function viewAllRole() {
   connection.query(
-    `SELECT Title AS Position, Salary, Name AS Department FROM Role RIGHT JOIN Department ON Role.Department_ID = Department.id;`,
+    `SELECT Title AS Position, Salary, Name AS Department FROM Role LEFT JOIN Department ON Role.Department_ID = Department.id;`,
     (error, results) => {
       console.table(results);
       Ask();
