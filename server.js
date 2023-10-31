@@ -8,6 +8,7 @@ const PORT = process.env.PORT || 3001;
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
+// Connect to Database
 const connection = mysql.createConnection({
   host: "localhost",
   user: "root",
@@ -60,6 +61,7 @@ inquirer.prompt(question[0]).then(function (answers) {
   switch (answers.Main) {
     case "VIEW ALL DEPARTMENTS":
       DoNext = 0;
+      viewAllDepartment();
       console.log("USER VIEWED ALL DEPARTMENTS ");
       break;
     case "VIEW ALL ROLES":
@@ -67,7 +69,7 @@ inquirer.prompt(question[0]).then(function (answers) {
       console.log("USER VIEWED ALL ROLES");
       break;
     case "VIEW ALL EMPLOYEE":
-      DoNext = 2;
+      viewAllEmployee();
       console.log("USER VIEWED ALL EMPLOYEE");
       break;
     case "ADD NEW DEPARTMENT":
@@ -91,9 +93,22 @@ inquirer.prompt(question[0]).then(function (answers) {
       console.log(" USER EXITED ");
       return;
   }
-  inquirer.prompt(NextQuestion[DoNext]).then(function (answers1) {
-    console.log("Your name is:", answers1.name);
-  });
+  // inquirer.prompt(NextQuestion[DoNext]).then(function (answers1) {
+  //   console.log("Your name is:", answers1.name);
+  // });
 });
 
+
 // function().then()
+
+function viewAllDepartment () {
+  connection.query(`SELECT First AS First_Name, Last AS Last_Name, Manager_Name, Title FROM Employee LEFT JOIN Manager ON  Manager.id=Employee.Manager_ID
+  LEFT JOIN Role ON Role.id=Employee.Role_ID;`, (error, results) => {
+      console.table(results);
+  });
+};
+function viewAllEmployee () {
+  connection.query(`SELECT Employee.id AS Employee_ID, First AS First_Name, Last AS Last_Name, Manager_Name, Title FROM Employee LEFT JOIN Manager ON Manager.id=Employee.Manager_ID LEFT JOIN Role ON Role.id=Employee.Role_ID;`, (error, results) => {
+      console.table(results);
+  });
+};

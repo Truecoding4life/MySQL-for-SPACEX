@@ -1,4 +1,4 @@
-USE spaceX;
+USE spaceB;
 -- ADD DEPARTMENT
 INSERT INTO Department(name)
 VALUES ("Human Resources"),
@@ -25,7 +25,7 @@ VALUES  ("Elon Musk",1),
         ("Kevin Lebronze",4);
 
 -- ADD EMPLOYEE
-INSERT INTO Employee(First, Last, Role_ID) -- ADD Manager_ID
+INSERT INTO Employee(First, Last, Role_ID) -- ADD CEO BECAUSE CEO DOESN"T HAVE MANAGER
 VALUES ("Elon", "Musk", 1);
 
 
@@ -42,9 +42,15 @@ VALUES ("Amber", "Heard",2,1),
 
 SELECT First,Last,Manager_Name FROM Employee INNER JOIN Manager ON Employee.Manager_ID = Manager.id;
 
-SELECT First AS First_Name, Last AS Last_Name, Title FROM Employee INNER JOIN Role ON Employee.Role_ID = Role.id;
+
+-- SHOW EMPLOYEE + JOB 
+SELECT First AS First_Name, Last AS Last_Name, Title AS Position FROM Employee RIGHT JOIN Role ON Employee.Role_ID = Role.id;
 
 
 -- SHOW ALL DATA
 SELECT First AS First_Name, Last AS Last_Name, Manager_Name, Title FROM Employee LEFT JOIN Manager ON  Manager.id=Employee.Manager_ID
 LEFT JOIN Role ON Role.id=Employee.Role_ID;
+
+USE spaceX;
+UPDATE Role
+SET Title = "Junior Accountant"   WHERE id = 8;
