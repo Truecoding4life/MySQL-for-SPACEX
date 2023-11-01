@@ -53,7 +53,7 @@ Our JavaScript and MySQL-powered application offers users the power to explore S
 
 
 #### Add New Employee
-*User Don't have to enter a role ID for this employee, instead all the role available will be come a selection.*
+*User Don't have to enter a role ID for this employee instead all the role available will become a selection.*
 
 ![Add Employee](./Assets/images/addRole.png)
 
