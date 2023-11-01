@@ -107,7 +107,6 @@ function addDepartment() {
 
 // Add new role to database using this
 function addRole() {
-  updateRole();
   inquirer
     .prompt([
       question[2],
@@ -122,7 +121,7 @@ function addRole() {
     .then((respond) => {
       const IdConvert = allDepartment.indexOf(respond.id);
       connection.query(
-        `INSERT INTO Role(Title, Salary, Department_ID) VALUES ("${respond.Rolename}", "${respond.salary}", ${IdConvert+1} );`
+        `INSERT INTO Role(Title, Salary, Department_ID) VALUES ("${respond.Rolename}", "${respond.salary}", ${IdConvert + 1} );`
       );
     })
     .then(() => {
@@ -134,7 +133,6 @@ function addRole() {
 // This function will add new employee
 // This function will prompt questions to add new employee
 function addEmployee() {
-  updateEmployee();
   inquirer
     .prompt([
       question[5],

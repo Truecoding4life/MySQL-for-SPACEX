@@ -1,4 +1,4 @@
-USE spaceB;
+USE spaceX;
 -- ADD DEPARTMENT
 INSERT INTO Department(name)
 VALUES ("Human Resources"),

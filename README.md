@@ -10,7 +10,7 @@
 
 [Github Repository](https://github.com/Truecoding4life/MySQL-for-SPACEX)
 
-[Demonstration of the Application](./examples/Logo%20Generator%20Demonstration%20copy.mp4)
+
 
 ---
 
@@ -22,7 +22,7 @@ Our JavaScript and MySQL-powered application offers users the power to explore S
 -------------
 
 
-
+![Demonstration of the Application](./Assets/images/Demonstration.gif)
 
 #### Table of Contents
 
