@@ -1,43 +1,85 @@
-# Database Look Up
+# EXPLORE SPACEX DATABASE - MySQL
+[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
-## BREAKING DOWN REQUIREMENT
-* required options
-    *    view all departments, view all roles, view all employees, add a department, add a role, add an employee, and update an employee role
+#### Resources
 
-        *   WHEN I choose to view all departments 
-            THEN I am presented with a formatted table showing department names and department ids
+[Github Repository](https://github.com/Truecoding4life/MySQL-for-SPACEX)
 
-        *   WHEN I choose to view all roles 
-            THEN I am presented with the job title, role id, the department that role belongs to, and the salary for that role
-
-        *   WHEN I choose to view all employees 
-            THEN I am presented with a formatted table showing employee data, including employee ids, first names, last names, job titles, departments, salaries, and managers that the employees report to
-
-        *   WHEN I choose to add a department 
-            THEN I am prompted to enter the name of the department and that department is added to the database
-
-        *   WHEN I choose to add a role 
-            -  THEN I am prompted to enter the name, salary, and department for the role and that role is added to the database
-
-        *   WHEN I choose to add an employee 
-              -  THEN I am prompted to enter the employee’s first name, last name, role, and manager, and that employee is added to the database
-
-        *   WHEN I choose to update an employee role 
-            THEN I am prompted to select an employee to update and their new role and this information is updated in the database 
+[Demonstration of the Application](./examples/Logo%20Generator%20Demonstration%20copy.mp4)
 
 
-You might want to use a separate file that contains functions for performing specific SQL queries you'll need to use. A constructor function or class could be helpful for organizing these.
+### Description 
+Our JavaScript and MySQL-powered application offers users the power to explore SpaceX Corporation's extensive database. Dive into the universe of space exploration, effortlessly navigate and manage the database, and have the ability to make impactful changes to the data, keeping you in the loop with the latest developments in the exciting world of space technology and innovation.
+
+-------------
+
+#### Table of Contents
+
+* [Resources](#resources)
+* [Features](#features)
+* [Installation](#installation)
+* [Usage](#usage)
 
 
-## Turn in Requirements
+## Features
 
-* A walkthrough video demonstrating the functionality of the application.
+#### Explore Department, Employee and Role
 
-* The URL of the GitHub repository, with a unique name and a README describing the project.
+*View of all employees*
 
-![Main](/Assets/images%20requirement/Department.png)
-![Tables Requirement](./Assets/images%20requirement/tables.png)
-![Table](/Assets/images%20requirement/Employee%20table.png)
-![Choice Add Role](/Assets/images%20requirement/Add%20Role.png)
-![Choice Add Employee](/Assets/images%20requirement/1\)%20+%20Employee.png)
-![Choice Add Employee](/Assets/images%20requirement/2\)%20+%20Employee.png)
+![View Department](./Assets/images/Employee.png)
+
+
+---
+
+#### Add New Employee
+*User Don't have to enter a role ID for this employee, instead all the role available will be come a selection.*
+
+![Add Employee](./Assets/images/addRole.png)
+
+
+---
+
+#### Update Employee Role
+
+*User don't have to enter the employee ID to change their role, instead they just select which employee from the list*
+
+![View Department](./Assets/images/Update.png)
+
+
+---
+
+
+#### Salary input is not forgiven for alphabetic.
+
+*User only allow to enter number into salary input field. This will prevent the problem of typo when setting salary.*
+
+![Salary Input Validation](./Assets/images/Salary%20validation.png)
+
+---
+
+### Installation
+1. Download zip-file
+2. Open zip and extract file
+3. Open file path in terminal 
+4. To start up the application type in the command line
+  
+    node server.js
+
+5. You then could explore the database of Space X;
+
+
+---
+
+### Usage
+The SpaceX Database application is your all-in-one solution for seamless data management and exploration. With a user-friendly interface and dynamic role management, it simplifies the process of keeping your database accurate and up to date, ensuring you're always in the know about the incredible work happening in the world of space technology and innovation.
+
+Explore, update, and manage your SpaceX database with confidence, all thanks to the power of MySQL and JavaScript.
+
+---
+
+##### This README was generated based on the Good README Guide
+
+---
+
+This Application is made available by Jay's Studio © 
