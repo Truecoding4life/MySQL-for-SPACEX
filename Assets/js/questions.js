@@ -43,7 +43,9 @@ const question = [
     message: "CHOSE A DEPARTMENT FOR THIS ROLE", // ID is Special since the User doesn't know exactly which id to input we will use a list
     type: "list",
     choices: allRole,
-  },{ // Question for add employee
+  },
+  // Question for add employee
+  { 
     name: "first",
     message: "ENTER THIS EMPLOYEE FIRST NAME",
     type: "input",
@@ -52,6 +54,13 @@ const question = [
     message: "ENTER THIS EMPLOYEE LAST NAME",
     type: "input",
   },
+  // Question for update employee role
+  {
+    name: "employeeRole",
+    message: "Select an option to continue ",
+    type: "list",
+    choices: []
+  }
 ];
 
 module.exports = question;

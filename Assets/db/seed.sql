@@ -77,5 +77,8 @@ VALUES ("CEO", 200000, 1);
 "SELECT Name FROM Department ")
 
 
--- UPDATE EMPLOYEE
-UPDATE Employee SET First = "Elon", Last = "Musk", Role_ID = 1 WHERE id = 1;
+-- UPDATE EMPLOYEE ROLE
+UPDATE Employee SET Role_ID = 1 WHERE id = 9;
+
+-- DELETE EMPLOYEE
+DELETE FROM Employee WHERE id = 8;
