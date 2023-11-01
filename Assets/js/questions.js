@@ -1,5 +1,5 @@
 // This file contains all of our questions
-const  { addRole } = require('../../query');
+const  addRole = require('../../server');
 const allRole = ["Human Resources", "Design", "Test", "Finance", "Education"];
 const question = [
   { // First
