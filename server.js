@@ -8,7 +8,7 @@ const connection = mysql.createConnection({
   host: "localhost",
   user: "root",
   password: "11223344",
-  database: "spaceS",
+  database: "spaceX",
 });
 let allDepartment = [];
 let allManager = [];
@@ -49,7 +49,7 @@ function Ask() {
         break;
       case "EXIT":
         console.log(" USER EXITED ");
-        return;
+        process.exit();
     }
   });
 }
@@ -190,11 +190,12 @@ function updateManager() {
 function updateEmployee() {
   connection.query("SELECT First, Last From Employee;", (error, results) => {
     for (i = 0; i < results.length; i++) {
-      allEmployee.push((results[i].First + results[i].Last));
+      allEmployee.push((results[i].First + (" ") +results[i].Last));
     }
   });
 }
 
+// This function to change employee role
 function changeEmployeeRole() {
   inquirer
     .prompt([

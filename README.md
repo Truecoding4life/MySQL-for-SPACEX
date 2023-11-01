@@ -1,11 +1,19 @@
 # EXPLORE SPACEX DATABASE - MySQL
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
+
+
+
+
+
 #### Resources
 
 [Github Repository](https://github.com/Truecoding4life/MySQL-for-SPACEX)
 
 [Demonstration of the Application](./examples/Logo%20Generator%20Demonstration%20copy.mp4)
+
+---
+
 
 
 ### Description 
@@ -13,15 +21,23 @@ Our JavaScript and MySQL-powered application offers users the power to explore S
 
 -------------
 
+
+
+
 #### Table of Contents
 
 * [Resources](#resources)
 * [Features](#features)
 * [Installation](#installation)
 * [Usage](#usage)
+* [Technology Used](#technologies-used)
+
 
 
 ## Features
+
+
+
 
 #### Explore Department, Employee and Role
 
@@ -29,16 +45,22 @@ Our JavaScript and MySQL-powered application offers users the power to explore S
 
 ![View Department](./Assets/images/Employee.png)
 
-
 ---
+
+
+
 
 #### Add New Employee
 *User Don't have to enter a role ID for this employee, instead all the role available will be come a selection.*
 
 ![Add Employee](./Assets/images/addRole.png)
 
-
 ---
+
+
+
+
+
 
 #### Update Employee Role
 
@@ -50,6 +72,11 @@ Our JavaScript and MySQL-powered application offers users the power to explore S
 ---
 
 
+
+
+
+
+
 #### Salary input is not forgiven for alphabetic.
 
 *User only allow to enter number into salary input field. This will prevent the problem of typo when setting salary.*
@@ -57,6 +84,11 @@ Our JavaScript and MySQL-powered application offers users the power to explore S
 ![Salary Input Validation](./Assets/images/Salary%20validation.png)
 
 ---
+
+
+
+
+
 
 ### Installation
 1. Download zip-file
@@ -78,8 +110,27 @@ Explore, update, and manage your SpaceX database with confidence, all thanks to 
 
 ---
 
+
+
+
+### Technologies used
+- Inquirer NPM Packages
+- MySQL2 NPM Packages
+- MySQL
+- Javascript
+
+---
+
+
+
+
+
+
 ##### This README was generated based on the Good README Guide
 
 ---
+
+
+
 
 This Application is made available by Jay's Studio © 
